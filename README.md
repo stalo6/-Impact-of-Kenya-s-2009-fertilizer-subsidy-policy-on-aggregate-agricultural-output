@@ -70,6 +70,10 @@ national_time_series <- national_data %>%
   )
 ```
 
+<img width="605" height="348" alt="image" src="https://github.com/user-attachments/assets/328a37c2-9821-4fd8-a482-4ad4a9e8d9f8" />
+*Figure 2: Log-transformed aggregate agricultural production in Kenya, 1960–2022.*
+
+
 ---
 
 ##  Model Specification
