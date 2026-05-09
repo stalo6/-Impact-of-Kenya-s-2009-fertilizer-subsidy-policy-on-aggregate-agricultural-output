@@ -1,13 +1,13 @@
 #loading the required libraries
-library(readxl)
-library(tidyr)
-library(stringr)
-library(dplyr)
-library(ggplot2)
-library(tseries)
-library(forecast)
-library(lmtest)
-library(sandwich)
+library(readxl) # for loading the dataset
+library(tidyr) # for data cleaning
+library(stringr) # for string manipulation
+library(dplyr) # for data manipulation
+library(ggplot2) # for data visualization
+library(tseries) # for ADF stationarity test
+library(forecast) # for time series modelling and forecasting
+library(lmtest) # for diagnostic checking for linear regression models
+library(sandwich) # for computing standard errors
 
 # loading the required data set
 agricultural_production <- read_excel("C:\\Users\\stalo\\Documents\\School Work\\Fourth Year Project\\Kenyas_Agricultural_Production.xlsx")
@@ -34,7 +34,9 @@ agri_production_cleaned <- agricultural_production %>%
     values_fill = 0
   ) %>%
   
-  # renaming Production to production_tonnes and Area harvested to area_harvested
+  # renaming Production to production_tonnes and Area harvested to 
+  #area_harvested
+  
   rename(
     production_tonnes = Production,
     area_hectares = `Area harvested`
@@ -56,8 +58,9 @@ national_time_series <- agri_production_cleaned %>%
     
   ) %>%
   
-  # transformation: convert to natural logarithms to standardize the variance
-  # and facilitate the interpretation of results as percentage growth rates
+  # constructing the model variables
+  # convert to natural logarithms to standardize the variance and facilitate 
+  # the interpretation of results as percentage growth rates
   mutate(
     ln_output = log(Aggregate_National_Output),
     land_area = log(total_area_hectares),
@@ -72,7 +75,8 @@ summary(national_time_series)
 agri_production_cleaned %>%
   summarise(across(c(production_tonnes, area_hectares), ~ sd(.x, na.rm = TRUE)))
 
-
+# plotting the time series line graph of log-transformed aggregate production 
+# over time
 ggplot(national_time_series, aes(x = Year, y = ln_output)) +
   
   geom_line(color = "steelblue", linewidth = 1) + 
@@ -87,6 +91,7 @@ ggplot(national_time_series, aes(x = Year, y = ln_output)) +
   
   theme_minimal() 
 
+# plotting the time series line graph for aggregate production over time
 ggplot(national_time_series, aes(x = Year, y = Aggregate_National_Output)) +
   
   geom_line(color = "steelblue", linewidth = 1) + 
@@ -105,22 +110,24 @@ ggplot(national_time_series, aes(x = Year, y = Aggregate_National_Output)) +
 adf_result<-adf.test(national_time_series$ln_output)
 print(adf_result)
 
-# differencing to make the data stationary
+# first differencing to make the data stationary
 diff_national_time_series<-diff(national_time_series$ln_output)
 
-# checking for stationarity on the differenced data using the Augmented Dicky Fuller Test
+# checking for stationarity on the differenced data using the Augmented Dicky 
+# Fuller Test
 diff_adf_result<-adf.test(diff_national_time_series)
 print(diff_adf_result)
 View (national_time_series)
 
-# Run the baseline Interrupted Time Series Model
+# run the baseline Interrupted Time Series Model
 model_its <- lm(ln_output ~ Year + intervention + post_time + land_area,
                 data = national_time_series)
 summary(model_its)
 
-# Checks Residuals for Autocorrelation
+# Check Residuals for Autocorrelation
 # Durbin-Watson test
 dwtest(model_its)
+
 # Visual check
 par(mfrow = c(1, 2))
 plot(residuals(model_its), type = "l",
@@ -146,9 +153,41 @@ model_arimax <- auto.arima(ln_output_ts,
                            seasonal      = FALSE,
                            stepwise      = FALSE,
                            approximation = FALSE)
+# Model Evaluation
+
+# overall model summary
 summary(model_arimax)
 
+# Training Set Error Measures (MAPE, RMSE, MAE)
+accuracy(model_arimax)
 
+# Information Criteria (AIC, AICc, BIC)
+cat("AIC:", AIC(model_arimax), "\n")
+cat("BIC:", BIC(model_arimax), "\n")
+
+model_arimax$aicc
+model_arimax$aic
+model_arimax$bic
+
+# Residual ACF1 — Confirming Autocorrelation is Resolved
+# Formal check - ACF of final model residuals
+par(mfrow = c(1, 2))
+
+# Residuals over time
+plot(residuals(model_arimax), type = "l",
+     main = "ARIMAX Residuals over Time",
+     ylab = "Residuals",
+     xlab = "Year")
+abline(h = 0, col = "red")
+
+# ACF plot
+acf(residuals(model_arimax),
+    main = "ACF of ARIMAX Residuals")
+
+# Reset plot layout
+par(mfrow = c(1, 1))
+
+# plotting the actual versus fitted values
 national_time_series$fitted <- fitted(model_arimax)
 
 ggplot(national_time_series, aes(x = Year)) +
