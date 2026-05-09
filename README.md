@@ -129,7 +129,7 @@ Raw FAOSTAT Data
        ▼
 3. Stationarity Testing (ADF)
    ├── At levels:      p = 0.7623 → NON-STATIONARY
-   └── After 1st diff: p = 0.01   → STATIONARY ✓  [Series is I(1)]
+   └── After 1st diff: p = 0.01   → STATIONARY   [Series is I(1)]
        │
        ▼
 4. Baseline OLS ITS Model
@@ -143,7 +143,7 @@ Raw FAOSTAT Data
        ▼
 6. Final ARIMAX Model [auto.arima()]
    ├── ARIMA(0,0,3) error structure selected
-   └── Residual ACF1 = −0.005 ≈ 0 → Autocorrelation RESOLVED ✓
+   └── Residual ACF1 = −0.005 ≈ 0 → Autocorrelation RESOLVED 
        │
        ▼
 7. Model Evaluation & Visualization
@@ -196,9 +196,9 @@ Training set error measures:
   ME: -7.04e-05  |  RMSE: 0.04131  |  MAE: 0.03174
   MAPE: 0.19%    |  MASE: 0.596    |  ACF1: -0.005
 ```
-## 📈 Results Summary
+##  Results Summary
 
-...stationarity and model output...
+
 
 ### Residual Diagnostics
 
