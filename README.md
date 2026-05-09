@@ -43,6 +43,10 @@ Three ITS coefficients directly map to three research objectives:
 | Post-intervention slope (`post_time`) | −0.0219 |  Yes | Growth rate **decelerated by 2.19%/year** after 2009 |
 | Land area elasticity (`land_area`) | +0.6082 |  Yes | **1% more land → 0.61% more output** |
 
+<img width="605" height="348" alt="image" src="https://github.com/user-attachments/assets/6b8486e4-78a4-4cb9-bca3-8f49b29de913" />
+
+*Figure 1: Actual vs. fitted log agricultural output (1960–2022).*
+
 > **Bottom Line:** The 2009 NAAIAP was **not associated with a sustained structural acceleration** in Kenya's aggregate agricultural output. Post-2009 annual growth dropped from 2.75% to approximately **0.56% per year**.
 
 ---
@@ -192,6 +196,23 @@ Training set error measures:
   ME: -7.04e-05  |  RMSE: 0.04131  |  MAE: 0.03174
   MAPE: 0.19%    |  MASE: 0.596    |  ACF1: -0.005
 ```
+## 📈 Results Summary
+
+...stationarity and model output...
+
+### Residual Diagnostics
+
+**Before ARIMAX — OLS Residuals (Autocorrelation Problem)**
+
+<img width="605" height="348" alt="image" src="https://github.com/user-attachments/assets/868acca7-90d9-4517-a446-2d3625f7406f" />
+
+*Figure 3: OLS residuals showing severe wave-like pattern and multi-lag autocorrelation (DW = 0.539).*
+
+**After ARIMAX — Corrected Residuals**
+
+<img width="605" height="348" alt="image" src="https://github.com/user-attachments/assets/57954d09-5277-4684-8121-6ae0e68e184f" />
+
+*Figure 4: ARIMAX residuals scattering randomly around zero with ACF1 = −0.005.*
 
 ### Post-Intervention Growth Rate Calculation
 
