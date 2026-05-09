@@ -6,7 +6,7 @@
   <img src="https://img.shields.io/badge/Method-ITS--ARIMAX-1F6B3A?style=for-the-badge"/>
   <img src="https://img.shields.io/badge/Data-FAOSTAT-orange?style=for-the-badge"/>
   <img src="https://img.shields.io/badge/Period-1960--2022-4A9B6F?style=for-the-badge"/>
-  <img src="https://img.shields.io/badge/Status-Complete-success?style=for-the-badge"/>
+  
 </p>
 
 ---
@@ -239,5 +239,5 @@ This project was completed as part of a research project at **Egerton University
 
 
 <p align="center">
-  <i>Egerton University &nbsp;|&nbsp; Department of Statistics & Actuarial Science &nbsp;|&nbsp; April 2026</i>
+  <i>Egerton University &nbsp;|&nbsp; Department of Mathematics &nbsp;|&nbsp; April 2026</i>
 </p>
