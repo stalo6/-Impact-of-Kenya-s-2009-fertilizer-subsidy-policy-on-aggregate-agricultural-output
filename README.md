@@ -196,10 +196,6 @@ Training set error measures:
   ME: -7.04e-05  |  RMSE: 0.04131  |  MAE: 0.03174
   MAPE: 0.19%    |  MASE: 0.596    |  ACF1: -0.005
 ```
-##  Results Summary
-
-
-
 ### Residual Diagnostics
 
 **Before ARIMAX — OLS Residuals (Autocorrelation Problem)**
