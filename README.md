@@ -153,7 +153,7 @@ Raw FAOSTAT Data
 
 ---
 
-## 📈 Results Summary
+##  Results Summary
 
 ### Stationarity Tests
 
